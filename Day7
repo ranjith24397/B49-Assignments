@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>XMLHttpRequest Day7 Exercise</title>
+  </head>
+  <body>
+    <script>
+     var xhr = new XMLHttpRequest();
+     var method = "Get";
+     var url = "https://restcountries.com/v3.1/all";
+      xhr.open(method,url);
+      xhr.onload = function(){
+
+      if(xhr.status === 200){
+        console.log(xhr.responseText);
+        var countrydetails = JSON.parse(xhr.responseText);
+        //Get all the countries from Asia continent /region using Filter function
+        const countrypopulation = countrydetails.filter(country => country.population < 200000);
+          console.log(countrypopulation);
+        //Get all the countries with a population of less than 2 lakhs using Filter function
+        const asiaregion = countrydetails.filter(country => country.region === "Asia" );
+          console.log(asiaregion);
+        //Print the following details name, capital, flag using forEach function
+          countrydetails.forEach(country => {
+          console.log("Name:", country.name);
+          console.log("Capital:", country.capital);
+          console.log("Flag:", country.flag);
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+          });
+        //Print the total population of countries using reduce function
+         const totalPopulation = countrydetails.reduce((accumulator, country) => {
+            return accumulator + country.population;
+          },0);
+          console.log("Total Population:", totalPopulation);
+      }else{
+        console.log("Request Failed",xhr.status);
+      }
+    }
+      xhr.send();
+    </script>
+  </body>
+</html>
